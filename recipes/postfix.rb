@@ -1,4 +1,4 @@
-chef_gem chef-vault
+chef_gem 'chef-vault'
 
 default['postfix']['aliases']['ernie'] = "ernie,ehershey+#{node['hostname']}@gmail.com"
 
