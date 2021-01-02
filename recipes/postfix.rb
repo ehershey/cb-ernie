@@ -9,3 +9,10 @@ vault['relayhosts'].each do |relayhost,value|
   node.default['postfix']['main']['relayhost'] = relayhost
 end
 
+# mac-specifics
+if platform_family?('mac_os_x') then
+  node.default['postfix']['main']['mail_owner'] = "_postfix"
+  node.default['postfix']['main']['setgid_group'] = "_postdrop"
+  node.default['postfix']['main']["queue_directory"] = "/private/var/spool/postfix"
+  node.default['postfix']['main']["daemon_directory"] = "/usr/libexec/postfix"
+end
