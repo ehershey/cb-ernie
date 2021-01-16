@@ -6,3 +6,7 @@
 #npm_package 'trello-cli' do
   #url "git@github.com:mheap/trello-cli.git"
 #end
+#
+macos_desktop_screensaver do
+  only_if { platform_family?("mac_os_x") }
+end
