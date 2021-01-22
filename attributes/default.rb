@@ -14,5 +14,8 @@ when 'arch'
   normal['chef_client']['backup_path'] = '/var/lib/chef'
   normal['chef_client']['chkconfig']['start_order'] = 98
   normal['chef_client']['chkconfig']['stop_order']  = 02
+
+  normal['chef_client_updater']['version'] = '16.2.73'
+
 end
 
