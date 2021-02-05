@@ -10,7 +10,7 @@ systemd_unit 'mongodb-grafana.service' do
     WorkingDirectory: '/var/lib/grafana/plugins/mongodb-grafana',
     User: 'grafana',
     Group: 'grafana',
-    SyslogIdentifier: 'grafana',
+    SyslogIdentifier: 'mongodb-grafana',
   },
   Install: {
     WantedBy: 'multi-user.target',
