@@ -11,9 +11,8 @@ systemd_unit 'mongodb-grafana.service' do
     After: 'network.target',
   },
   Service: {
-    Type: 'notify',
     Restart: 'on-failure',
-    ExecStart: "npm run server --cache /tmp/grafana-npm --init-module /tmp/grafana-npm-init.js >> #{stdoutlog} 2>> #{stderrlog}",
+    ExecStart: "sh -c \"npm run server --cache /tmp/grafana-npm --init-module /tmp/grafana-npm-init.js >> #{stdoutlog} 2>> #{stderrlog}\"",
     WorkingDirectory: '/var/lib/grafana/plugins/mongodb-grafana',
     User: 'grafana',
     Group: 'grafana',
