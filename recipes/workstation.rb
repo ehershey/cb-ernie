@@ -36,5 +36,16 @@ if platform_family?('mac_os_x') then
     homebrew_package "moreutils"
     homebrew_package "mongodb/brew/mongodb-community"
 
+    file "/etc/sudoers.d/chef-brew" do
+      content <<-FOO
+      # for chef to install homebrew casks
+      # e.g. /usr/bin/sudo -E -- /usr/bin/env LOGNAME=ernie USER=ernie USERNAME=ernie /usr/sbin/installer -pkg /opt/homebrew/Caskroom/chef-workstation/21.6.467/chef-workstation-21.6.467-1.x86_64.pkg -target /
+      ernie ALL = (ALL) NOPASSWD:SETENV: /usr/bin/env
+      FOO
+      user 'root'
+      owner 'wheel'
+      mode '0644'
+    end
+
 
 end
