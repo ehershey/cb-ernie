@@ -1,2 +1,4 @@
 name 'ernie'
-version '0.3'
+version '0.5'
+
+depends 'perl'

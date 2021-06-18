@@ -10,3 +10,6 @@
 macos_desktop_screensaver do
   only_if { platform_family?("mac_os_x") }
 end
+
+# for gnucash
+cpan_module 'Finance::Quote'
