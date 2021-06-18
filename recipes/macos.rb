@@ -33,7 +33,10 @@ end
     not_if { ::File.exist? "/opt/chef-workstation/bin/uninstall_chef_workstation" }
   end
 
-  homebrew_tap "mongodb/brew
+  homebrew_tap "mongodb/brew" do
+    homebrew_path "#{Homebrew::prefix}bin/brew"
+  end
+
 
 short_hostname = node.name
 long_hostname = "#{short_hostname}.local"
