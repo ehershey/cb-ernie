@@ -58,6 +58,6 @@ file "/etc/sudoers.d/chef-brew" do
   ernie ALL = (ALL) NOPASSWD:SETENV: /usr/bin/env
   FOO
   user 'root'
-  owner 'wheel'
+  group 'wheel'
   mode '0644'
 end
