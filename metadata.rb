@@ -1,5 +1,5 @@
 name 'ernie'
-version '0.5'
+version '0.7'
 
 depends 'logrotate'
 depends 'postfix'
