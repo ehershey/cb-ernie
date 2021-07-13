@@ -34,6 +34,14 @@ end
     not_if { (::File.exist? "/Applications/iTerm.app" ) || (::File.exist? "/Applications/New/iTerm.app" ) }
   end
 
+
+  homebrew_cask "zoom" do
+    homebrew_path "#{Homebrew::prefix}bin/brew"
+    not_if { (::File.exist? "/Applications/zoom.us.app" ) || (::File.exist? "/Applications/New/zoom.us.app" ) }
+  end
+
+
+
   homebrew_cask "chef-workstation" do
     homebrew_path "#{Homebrew::prefix}bin/brew"
     not_if { ::File.exist? "/opt/chef-workstation/bin/uninstall_chef_workstation" }
