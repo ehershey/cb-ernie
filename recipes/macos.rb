@@ -1,3 +1,8 @@
+
+# not used by everything
+appdir = "/Applications/new"
+
+
 ENV['PATH'] = "#{Homebrew::prefix}/bin:" + ENV['PATH']
 
 BREW_DAYS_MIN = 15
@@ -12,6 +17,7 @@ if brew_installed then
   brew_age_days = ( Time.now - File.mtime(path.strip) ) / 60 / 60 / 24
   Chef::Log.info "brew_age_days: #{brew_age_days}"
 end
+
 
 if ( !brew_installed ) || ( brew_age_days > BREW_DAYS_MIN ) then
 
@@ -31,6 +37,12 @@ end
   homebrew_cask "chef-workstation" do
     homebrew_path "#{Homebrew::prefix}bin/brew"
     not_if { ::File.exist? "/opt/chef-workstation/bin/uninstall_chef_workstation" }
+  end
+
+  homebrew_cask "xbar.app" do
+    homebrew_path "#{Homebrew::prefix}bin/brew"
+    not_if { ::File.exist? "#{appdir}/xbar.app" }
+    options "--appdir=#{appdir}"
   end
 
   homebrew_tap "mongodb/brew" do
