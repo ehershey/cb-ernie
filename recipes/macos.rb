@@ -49,7 +49,7 @@ end
     not_if { ::File.exist? "/opt/chef-workstation/bin/uninstall_chef_workstation" }
   end
 
-  homebrew_cask "xbar.app" do
+  homebrew_cask "xbar" do
     homebrew_path "#{Homebrew::prefix}bin/brew"
     options "--appdir=#{appdir}"
     not_if { (::File.exist? "/Applications/xbar.app" ) || (::File.exist? "#{appdir}/xbar.app" ) }
