@@ -59,6 +59,10 @@ end
     homebrew_path "#{Homebrew::prefix}bin/brew"
   end
 
+  homebrew_tap "rodionovd/taps" do
+    homebrew_path "#{Homebrew::prefix}bin/brew"
+  end
+
 
 short_hostname = node.name
 long_hostname = "#{short_hostname}.local"
