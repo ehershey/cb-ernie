@@ -1,6 +1,6 @@
 
 # not used by everything
-appdir = "/Applications/new"
+appdir = "/Applications/New"
 
 
 ENV['PATH'] = "#{Homebrew::prefix}/bin:" + ENV['PATH']
@@ -31,13 +31,15 @@ end
 
   homebrew_cask "iterm2" do
     homebrew_path "#{Homebrew::prefix}bin/brew"
-    not_if { (::File.exist? "/Applications/iTerm.app" ) || (::File.exist? "/Applications/New/iTerm.app" ) }
+    options "--appdir=#{appdir}"
+    not_if { (::File.exist? "/Applications/iTerm.app" ) || (::File.exist? "#{appdir}/iTerm.app" ) }
   end
 
 
   homebrew_cask "zoom" do
     homebrew_path "#{Homebrew::prefix}bin/brew"
-    not_if { (::File.exist? "/Applications/zoom.us.app" ) || (::File.exist? "/Applications/New/zoom.us.app" ) }
+    options "--appdir=#{appdir}"
+    not_if { (::File.exist? "/Applications/zoom.us.app" ) || (::File.exist? "#{appdir}/zoom.us.app" ) }
   end
 
 
@@ -49,8 +51,8 @@ end
 
   homebrew_cask "xbar.app" do
     homebrew_path "#{Homebrew::prefix}bin/brew"
-    not_if { ::File.exist? "#{appdir}/xbar.app" }
     options "--appdir=#{appdir}"
+    not_if { (::File.exist? "/Applications/xbar.app" ) || (::File.exist? "#{appdir}/xbar.app" ) }
   end
 
   homebrew_tap "mongodb/brew" do
