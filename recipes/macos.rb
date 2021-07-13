@@ -69,7 +69,7 @@ file "/etc/sudoers.d/chef-brew" do
   # e.g. /usr/bin/sudo -E -- /usr/bin/env LOGNAME=ernie USER=ernie USERNAME=ernie /usr/sbin/installer -pkg /opt/homebrew/Caskroom/chef-workstation/21.6.467/chef-workstation-21.6.467-1.x86_64.pkg -target /
   ernie ALL = (ALL) NOPASSWD:SETENV: /usr/bin/env
   FOO
-  user 'root'
+  owner 'root'
   group 'wheel'
   mode '0644'
 end
