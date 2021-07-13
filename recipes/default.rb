@@ -27,6 +27,7 @@ if node['ernie']['go_packages'] then
       command "go get #{package}"
       environment({
         GOPATH: "#{gopath}/go",
+        GOCACHE: "/tmp",
       })
         ## Use the package-installed Go as the bootstrap version b/c Go is built with Go
         #GOROOT_BOOTSTRAP: "#{new_resource.install_dir}/go-#{new_resource.version}",
