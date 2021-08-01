@@ -89,6 +89,15 @@ file "/etc/sudoers.d/chef-brew" do
 end
 
 execute "brew unlink ctags" do
-  action :nothing
-  subscribes :run, 'homebrew_package[universal-ctags]', :before
+  user node['ernie']['user']
+  # not sure why this does't work
+  # subscribes :run, 'homebrew_package[universal-ctags]', :before
+  # action :nothing
+end
+
+execute "brew unlink vim" do
+  user node['ernie']['user']
+  # not sure why this does't work
+  # subscribes :run, 'homebrew_package[macvim]', :before
+  # action :nothing
 end
