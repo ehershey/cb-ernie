@@ -3,7 +3,7 @@ include_recipe 'perl'
 cpan_module 'Finance::Quote'
 
 if platform_family?('mac_os_x') then
-  include_recipe "ernie::macos"
+  include_recipe 'ernie::macos'
 end
 
 user = node['ernie']['user']
@@ -19,6 +19,6 @@ end
 
 
 execute "git clone VundleVim" do
-    command "git clone https://github.com/VundleVim/Vundle.vim.git #{bundledir}"
-    not_if { ::File.exist? "#{bundledir}/.git" }
+  command "git clone https://github.com/VundleVim/Vundle.vim.git #{bundledir}"
+  not_if { ::File.exist? "#{bundledir}/.git" }
 end

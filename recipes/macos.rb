@@ -87,3 +87,8 @@ file "/etc/sudoers.d/chef-brew" do
   group 'wheel'
   mode '0644'
 end
+
+execute "brew unlink ctags" do
+  action :nothing
+  subscribes :run, 'homebrew_package[universal-ctags]', :immediately
+end
