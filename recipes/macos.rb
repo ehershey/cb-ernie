@@ -90,24 +90,10 @@ file "/etc/sudoers.d/chef-brew" do
 end
 
 
-execute "brew unlink ctags || true" do
-  user node['ernie']['user']
-  # not sure why this does't work
-  # subscribes :run, 'homebrew_package[universal-ctags]', :before
-  # action :nothing
-end
-# [ernie@eahimac5 chef-repo-ernie[master*]]$ time brew unlink  ctags
-# Error: No such keg: /opt/homebrew/Cellar/ctags
-#
-# real    0m0.566s
-# user    0m0.330s
-# sys     0m0.228s
-# [ernie@eahimac5 chef-repo-ernie[master*]]$
-#
-execute "brew unlink vim || true" do
-  user node['ernie']['user']
-  # not sure why this does't work
-  # subscribes :run, 'homebrew_package[macvim]', :before
-  # action :nothing
+%w{vim ctags}.each do|package|
+  execute "brew unlink #{package}" do
+    user node['ernie']['user']
+    only_if { ::Dir.exist? "#{Homebrew::prefix}/Cellar/#{package}" }
+  end
 end
 
