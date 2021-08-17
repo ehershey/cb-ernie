@@ -98,6 +98,6 @@ end
 execute "brew unlink vim" do
   user node['ernie']['user']
   # not sure why this does't work
-  # subscribes :run, 'homebrew_package[macvim]', :before
-  # action :nothing
+  subscribes :run, 'homebrew_package[macvim]', :before
+  action :nothing
 end
