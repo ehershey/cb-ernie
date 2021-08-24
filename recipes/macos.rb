@@ -29,39 +29,40 @@ else
   Chef::Log.info "Skipping homebrew install because it's already installed"
 end
 
-  homebrew_cask "iterm2" do
-    homebrew_path "#{Homebrew::prefix}bin/brew"
-    options "--appdir=#{appdir}"
-    not_if { (::File.exist? "/Applications/iTerm.app" ) || (::File.exist? "#{appdir}/iTerm.app" ) }
-  end
+
+homebrew_cask "iterm2" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+  options "--appdir=#{appdir}"
+  not_if { (::File.exist? "/Applications/iTerm.app" ) || (::File.exist? "#{appdir}/iTerm.app" ) }
+end
 
 
-  homebrew_cask "zoom" do
-    homebrew_path "#{Homebrew::prefix}bin/brew"
-    options "--appdir=#{appdir}"
-    not_if { (::File.exist? "/Applications/zoom.us.app" ) || (::File.exist? "#{appdir}/zoom.us.app" ) }
-  end
+homebrew_cask "zoom" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+  options "--appdir=#{appdir}"
+  not_if { (::File.exist? "/Applications/zoom.us.app" ) || (::File.exist? "#{appdir}/zoom.us.app" ) }
+end
 
 
 
-  homebrew_cask "chef-workstation" do
-    homebrew_path "#{Homebrew::prefix}bin/brew"
-    not_if { ::File.exist? "/opt/chef-workstation/bin/uninstall_chef_workstation" }
-  end
+homebrew_cask "chef-workstation" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+  not_if { ::File.exist? "/opt/chef-workstation/bin/uninstall_chef_workstation" }
+end
 
-  homebrew_cask "xbar" do
-    homebrew_path "#{Homebrew::prefix}bin/brew"
-    options "--appdir=#{appdir}"
-    not_if { (::File.exist? "/Applications/xbar.app" ) || (::File.exist? "#{appdir}/xbar.app" ) }
-  end
+homebrew_cask "xbar.app" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+  options "--appdir=#{appdir}"
+  not_if { (::File.exist? "/Applications/xbar.app" ) || (::File.exist? "#{appdir}/xbar.app" ) }
+end
 
-  homebrew_tap "mongodb/brew" do
-    homebrew_path "#{Homebrew::prefix}bin/brew"
-  end
+homebrew_tap "mongodb/brew" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+end
 
-  homebrew_tap "rodionovd/taps" do
-    homebrew_path "#{Homebrew::prefix}bin/brew"
-  end
+homebrew_tap "rodionovd/taps" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+end
 
 
 short_hostname = node.name
@@ -88,16 +89,11 @@ file "/etc/sudoers.d/chef-brew" do
   mode '0644'
 end
 
-execute "brew unlink ctags" do
-  user node['ernie']['user']
-  # not sure why this does't work
-  # subscribes :run, 'homebrew_package[universal-ctags]', :before
-  # action :nothing
+
+%w{vim ctags}.each do|package|
+  execute "brew unlink #{package}" do
+    user node['ernie']['user']
+    only_if { ::Dir.exist? "#{Homebrew::prefix}/Cellar/#{package}" }
+  end
 end
 
-execute "brew unlink vim" do
-  user node['ernie']['user']
-  # not sure why this does't work
-  # subscribes :run, 'homebrew_package[macvim]', :before
-  # action :nothing
-end
