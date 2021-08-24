@@ -21,10 +21,16 @@ end
 user = node['ernie']['user']
 gopath = node['ernie']['gopath'][node['platform_family']]
 
+directory gopath do
+  owner user
+  recursive true
+end
+
 if node['ernie']['go_packages'] then
   node['ernie']['go_packages'].each do |package|
     execute "go-get-#{package}" do
       command "go get #{package}"
+      user user
       environment({
         GOPATH: "#{gopath}",
         GOCACHE: "/tmp",

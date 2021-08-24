@@ -59,6 +59,10 @@ end
     homebrew_path "#{Homebrew::prefix}bin/brew"
   end
 
+  homebrew_tap "rodionovd/taps" do
+    homebrew_path "#{Homebrew::prefix}bin/brew"
+  end
+
 
 short_hostname = node.name
 long_hostname = "#{short_hostname}.local"
@@ -82,4 +86,18 @@ file "/etc/sudoers.d/chef-brew" do
   owner 'root'
   group 'wheel'
   mode '0644'
+end
+
+execute "brew unlink ctags" do
+  user node['ernie']['user']
+  # not sure why this does't work
+  # subscribes :run, 'homebrew_package[universal-ctags]', :before
+  # action :nothing
+end
+
+execute "brew unlink vim" do
+  user node['ernie']['user']
+  # not sure why this does't work
+  # subscribes :run, 'homebrew_package[macvim]', :before
+  # action :nothing
 end
