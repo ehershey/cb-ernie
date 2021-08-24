@@ -19,7 +19,7 @@ if node['ernie']['packages'] && node['ernie']['packages']['all'] then
 end
 
 user = node['ernie']['user']
-gopath = node['ernie']['gopath'][node['platform_family']]
+gopath = node['ernie']['gopath'][node['platform']]
 
 directory gopath do
   owner user
