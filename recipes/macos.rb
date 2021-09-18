@@ -29,6 +29,12 @@ else
   Chef::Log.info "Skipping homebrew install because it's already installed"
 end
 
+homebrew_cask "plex-media-server" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+  options "--appdir=#{appdir}"
+  not_if { (::File.exist? "/Applications/Plex Media Server.app" ) || (::File.exist? "#{appdir}/Plex Media Server.app" ) }
+end
+
 homebrew_cask "vlc" do
   homebrew_path "#{Homebrew::prefix}bin/brew"
   options "--appdir=#{appdir}"
