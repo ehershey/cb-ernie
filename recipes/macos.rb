@@ -29,6 +29,13 @@ else
   Chef::Log.info "Skipping homebrew install because it's already installed"
 end
 
+homebrew_cask "vlc" do
+  homebrew_path "#{Homebrew::prefix}bin/brew"
+  options "--appdir=#{appdir}"
+  not_if { (::File.exist? "/Applications/VLC.app" ) || (::File.exist? "#{appdir}/VLC.app" ) }
+end
+
+
 
 homebrew_cask "iterm2" do
   homebrew_path "#{Homebrew::prefix}bin/brew"
