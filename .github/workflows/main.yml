@@ -35,11 +35,14 @@ jobs:
            echo +dig +short myip.opendns.com @resolver1.opendns.com;
            dig +short myip.opendns.com @resolver1.opendns.com
 
-      - name: Upload Cookbook
+      - name: Write Chef Key
         env:
           CHEF_KEY: ${{ secrets.CHEF_KEY }}
         run: |
-          echo writing key file
+          echo Writing key file
           echo "$CHEF_KEY" > chef.pem
-          echo uploading cookbook
+
+      - name: Upload Cookbook
+        run: |
+          echo Uploading cookbook
           knife cookbook upload ernie --key chef.pem --user github --server https://chef.ernie.org/organizations/ernie_org --cookbook-path ..
