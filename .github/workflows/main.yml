@@ -25,6 +25,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Install knife
+        run: |
+          wget https://packages.chef.io/files/stable/chef-workstation/21.9.613/ubuntu/20.04/chef-workstation_21.9.613-1_amd64.deb
+          sudo dpkg -i chef-workstation_21.9.613-1_amd64.deb
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
@@ -34,3 +39,12 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - shell: bash
+        env:
+          CHEF_KEY: ${{ secrets.CHEF_KEY }}
+        run: |
+          echo "$CHEF_KEY" > chef.pem
+          knife cookbook upload ernie --key chef.pem --user github --server https://chef.ernie.org/organizations/ernie_org --cookbook-path ..
+
+
