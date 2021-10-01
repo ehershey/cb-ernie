@@ -6,7 +6,7 @@
 #
 #
 #
-if node['ernie']['packages'] && node['ernie']['packages'][node['platform_family']] then
+if node['ernie']['packages'] && node['ernie']['packages'][node['platform_family']]
   node['ernie']['packages'][node['platform_family']].each do |package|
     package package
   end
