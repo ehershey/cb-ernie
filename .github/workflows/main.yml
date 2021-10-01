@@ -30,9 +30,12 @@ jobs:
           wget https://packages.chef.io/files/stable/chef-workstation/21.9.613/ubuntu/20.04/chef-workstation_21.9.613-1_amd64.deb
           sudo dpkg -i chef-workstation_21.9.613-1_amd64.deb
 
+      - name: Spit out my IP address
+        run: |
+           echo +dig +short myip.opendns.com @resolver1.opendns.com;
+           dig +short myip.opendns.com @resolver1.opendns.com
 
-      - shell: bash
-        name: Upload Cookbook
+      - name: Upload Cookbook
         env:
           CHEF_KEY: ${{ secrets.CHEF_KEY }}
         run: |
