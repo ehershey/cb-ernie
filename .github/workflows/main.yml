@@ -44,7 +44,9 @@ jobs:
         env:
           CHEF_KEY: ${{ secrets.CHEF_KEY }}
         run: |
+          echo writing key file
           echo "$CHEF_KEY" > chef.pem
+          echo uploading cookbook
           knife cookbook upload ernie --key chef.pem --user github --server https://chef.ernie.org/organizations/ernie_org --cookbook-path ..
 
 
