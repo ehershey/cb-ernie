@@ -35,6 +35,7 @@ jobs:
            echo +dig +short myip.opendns.com @resolver1.opendns.com;
            dig +short myip.opendns.com @resolver1.opendns.com
 
+      # knife client create github
       - name: Write Chef Key
         env:
           CHEF_KEY: ${{ secrets.CHEF_KEY }}
@@ -42,6 +43,9 @@ jobs:
           echo Writing key file
           echo "$CHEF_KEY" > chef.pem
 
+      # for cookbook in $(knife cookbook list | awk '{print $1}'); do knife acl add client github cookbooks $cookbook update ; done # add to existing cookbooks
+      # knife acl add client github containers cookbooks update # add to future cookbooks
+      # knife acl add client github containers sandboxes create
       - name: Upload Cookbook
         run: |
           echo Uploading cookbook
