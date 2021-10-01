@@ -46,4 +46,6 @@ if node['ernie']['go_packages']
   end
 end
 
-
+file '/tmp/github-actions-test.txt' do
+  contents 'initial commit'
+end
