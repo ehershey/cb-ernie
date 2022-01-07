@@ -27,8 +27,9 @@ jobs:
 
       - name: Install knife
         run: |
-          wget https://packages.chef.io/files/stable/chef-workstation/21.9.613/ubuntu/20.04/chef-workstation_21.9.613-1_amd64.deb
-          sudo dpkg -i chef-workstation_21.9.613-1_amd64.deb
+          CHEF_VERSION=21.12.720
+          wget https://packages.chef.io/files/stable/chef-workstation/${CHEF_VERSION}/ubuntu/20.04/chef-workstation_${CHEF_VERSION}-1_amd64.deb
+          sudo dpkg -i chef-workstation_${CHEF_VERSION}-1_amd64.deb
 
       - name: Spit out my IP address
         run: |
