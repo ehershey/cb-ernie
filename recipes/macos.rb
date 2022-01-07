@@ -61,13 +61,13 @@ homebrew_tap "rodionovd/taps" do
 end
 
 homebrew_cask "plex-media-server" do
-  homebrew_path "#{Homebrew::prefix}bin/brew"
+  homebrew_path "#{Homebrew::install_path}bin/brew"
   options "--appdir=#{appdir}"
   not_if { (::File.exist? "/Applications/Plex Media Server.app" ) || (::File.exist? "#{appdir}/Plex Media Server.app" ) }
 end
 
 homebrew_cask "vlc" do
-  homebrew_path "#{Homebrew::prefix}bin/brew"
+  homebrew_path "#{Homebrew::install_path}bin/brew"
   options "--appdir=#{appdir}"
   not_if { (::File.exist? "/Applications/VLC.app" ) || (::File.exist? "#{appdir}/VLC.app" ) }
 end
@@ -100,7 +100,7 @@ end
 %w{vim ctags}.each do|package|
   execute "brew unlink #{package}" do
     user node['ernie']['user']
-    only_if { ::Dir.exist? "#{Homebrew::prefix}/Cellar/#{package}" }
+    only_if { ::Dir.exist? "#{Homebrew::install_path}/Cellar/#{package}" }
   end
 end
 
