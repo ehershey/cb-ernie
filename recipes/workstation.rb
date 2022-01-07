@@ -15,10 +15,11 @@ bundledir = "#{home}/.vim/bundle/Vundle.vim"
 
 directory bundledir do
   owner user
+  recursive true
 end
 
 
 execute "git clone VundleVim" do
-  command "git clone https://github.com/VundleVim/Vundle.vim.git #{bundledir}"
+  command "sudo -H -u #{user} git clone https://github.com/VundleVim/Vundle.vim.git #{bundledir}"
   not_if { ::File.exist? "#{bundledir}/.git" }
 end
