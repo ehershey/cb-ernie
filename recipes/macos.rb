@@ -30,44 +30,44 @@ else
 end
 
 homebrew_cask "iterm2" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
   options "--appdir=#{appdir}"
   not_if { (::File.exist? "/Applications/iTerm.app" ) || (::File.exist? "#{appdir}/iTerm.app" ) }
 end
 
 homebrew_cask "zoom" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
   options "--appdir=#{appdir}"
   not_if { (::File.exist? "/Applications/zoom.us.app" ) || (::File.exist? "#{appdir}/zoom.us.app" ) }
 end
 
 homebrew_cask "chef-workstation" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
   not_if { ::File.exist? "/opt/chef-workstation/bin/uninstall_chef_workstation" }
 end
 
 homebrew_cask "xbar.app" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
   options "--appdir=#{appdir}"
   not_if { (::File.exist? "/Applications/xbar.app" ) || (::File.exist? "#{appdir}/xbar.app" ) }
 end
 
 homebrew_tap "mongodb/brew" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
 end
 
 homebrew_tap "rodionovd/taps" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
 end
 
 homebrew_cask "plex-media-server" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
   options "--appdir=#{appdir}"
   not_if { (::File.exist? "/Applications/Plex Media Server.app" ) || (::File.exist? "#{appdir}/Plex Media Server.app" ) }
 end
 
 homebrew_cask "vlc" do
-  homebrew_path "#{Homebrew::install_path}bin/brew"
+  homebrew_path "#{Homebrew::install_path}/bin/brew"
   options "--appdir=#{appdir}"
   not_if { (::File.exist? "/Applications/VLC.app" ) || (::File.exist? "#{appdir}/VLC.app" ) }
 end
