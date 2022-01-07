@@ -1,7 +1,8 @@
 name 'ernie'
-version '0.8'
+version '0.9'
 
 depends 'logrotate'
 depends 'postfix'
 depends 'perl'
-depends 'homebrew'
+depends 'homebrew', '>= 5.3.0'
+
