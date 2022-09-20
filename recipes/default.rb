@@ -21,7 +21,12 @@ end
 user = node['ernie']['user']
 gopath = node['ernie']['gopath'][node['os']]
 
+Chef::Log.warn "gopath: #{gopath}"
+Chef::Log.warn "user: #{user}"
+Chef::Log.warn "node['os']: #{node['os']}"
+
 directory gopath do
+  name gopath
   owner user
   recursive true
 end
