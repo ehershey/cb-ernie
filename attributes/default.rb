@@ -17,5 +17,7 @@ when 'arch'
 
   normal['chef_client_updater']['version'] = '16.2.73'
 
+  normal['ernie']['apple-mfi-fastcharge'] = true
+
 end
 

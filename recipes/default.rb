@@ -53,4 +53,11 @@ end
 
 file '/tmp/github-actions-test.txt' do
   content 'updated commit'
+mfi_charge_type_file = "/sys/class/power_supply/apple_mfi_fastcharge/charge_type"
+
+if node['ernie']['apple-mfi-fastcharge'] then
+  file "/etc/udev/rules.d/99-iphone-fastcharge.rules" do
+    only_if { ::File.exist? mfi_charge_type_file }
+    content "SUBSYSTEM==\"usb\", ACTION==\"add\", ENV{ID_MODEL}==\"iPhone\", RUN+=\"/usr/bin/env sh -c 'echo Fast > #{mfi_charge_type_file}'\""
+  end
 end
