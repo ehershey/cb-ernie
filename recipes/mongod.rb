@@ -5,7 +5,7 @@
     data['family'] == 'inet'
   end.first
 
-mongod_exporter 'main' do
+mongodb_exporter 'main' do
 	web_listen_address "#{listen_ip}:#{mongod_exporter_port}"
 	user "nobody"
   collect_collection true
