@@ -11,6 +11,8 @@ install_packages = true
 
 if node['os'] == 'darwin'
 
+  node.override["prometheus_exporters"]["listen_interface"] = "utun3"
+
   BREW_DAYS_MIN = 15
 
   path = `which brew`
@@ -31,6 +33,7 @@ if node['os'] == 'darwin'
     install_packages = false
   end
 end
+Chef::Log.warn "node['prometheus_exporters']['listen_interface']: #{node['prometheus_exporters']['listen_interface']}"
 
 
 
