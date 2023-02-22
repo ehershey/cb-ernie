@@ -6,13 +6,41 @@
 #
 #
 #
-if node['ernie']['packages'] && node['ernie']['packages'][node['platform_family']]
+
+install_packages = true
+
+if node['os'] == 'darwin'
+
+  BREW_DAYS_MIN = 15
+
+  path = `which brew`
+  brew_installed = $?.success?
+
+  Chef::Log.info "brew_installed: #{brew_installed}"
+
+  Chef::Log.info "BREW_DAYS_MIN: #{BREW_DAYS_MIN}"
+  if brew_installed then
+    brew_age_days = ( Time.now - File.mtime(path.strip) ) / 60 / 60 / 24
+    Chef::Log.info "brew_age_days: #{brew_age_days}"
+  end
+
+
+  if brew_installed &&  brew_age_days < BREW_DAYS_MIN
+
+    Chef::Log.info "Skipping homebrew packages because age is old"
+    install_packages = false
+  end
+end
+
+
+
+if node['ernie']['packages'] && node['ernie']['packages'][node['platform_family']] && install_packages
   node['ernie']['packages'][node['platform_family']].each do |package|
     package package
   end
 end
 
-if node['ernie']['packages'] && node['ernie']['packages']['all']
+if node['ernie']['packages'] && node['ernie']['packages']['all'] && install_packages
   node['ernie']['packages']['all'].each do |package|
     package package
   end
