@@ -24,6 +24,11 @@ elsif node['os'] == 'darwin'
   #service_name = "homebrew.mxcl.node_exporter"
   Chef::Log.error("service_name: #{service_name}")
 
+  execute "brew brew services start node_exporter" do
+    user node['ernie']['user']
+    not_if { ::File.exist? "/Users/ernie/Library/LaunchAgents/homebrew.mxcl.node_exporter.plist" }
+  end
+
   file "#{Homebrew::install_path}/etc/node_exporter.args" do
     content "--web.listen-address=#{web_listen_address}"
     notifies :restart, "service[#{service_name}]"
