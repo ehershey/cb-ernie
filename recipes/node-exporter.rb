@@ -2,12 +2,14 @@ if node['os'] == 'linux'
     include_recipe 'prometheus_exporters::node'
 elsif node['os'] == 'darwin'
   package 'node_exporter'
-  node_exporter_port = '9100'
-	interface_name = node['prometheus_exporters']['listen_interface']
-  interface = node['network']['interfaces'][interface_name]
-  listen_ip = interface['addresses'].find do |_address, data|
-    data['family'] == 'inet'
-  end.first
+  #node_exporter_port = '9100'
+	#interface_name = node['prometheus_exporters']['listen_interface']
+  #interface = node['network']['interfaces'][interface_name]
+  #listen_ip = interface['addresses'].find do |_address, data|
+    #data['family'] == 'inet'
+  #end.first
+
+  listen_ip=`/Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4`
 
 	web_listen_address = "#{listen_ip}:#{node_exporter_port}"
 
