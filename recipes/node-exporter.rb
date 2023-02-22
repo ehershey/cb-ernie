@@ -9,12 +9,15 @@ elsif node['os'] == 'darwin'
     #data['family'] == 'inet'
   #end.first
 
-  listen_ip=`/Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4`
+  username = node['ernie']['user']
+  Chef::Log.error("username: #{username}")
+
+  listen_ip=`sudo -u #{username} /Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4`
+
+  Chef::Log.error("listen_ip: #{listen_ip}")
 
 	web_listen_address = "#{listen_ip}:#{node_exporter_port}"
 
-  username = node['ernie']['user']
-  Chef::Log.error("username: #{username}")
   uid = Etc.getpwnam(username).uid
   Chef::Log.error("uid: #{uid}")
   service_name = "gui/#{uid}/homebrew.mxcl.node_exporter"
