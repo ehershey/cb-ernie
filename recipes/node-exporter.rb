@@ -2,7 +2,7 @@ if node['os'] == 'linux'
     include_recipe 'prometheus_exporters::node'
 elsif node['os'] == 'darwin'
   package 'node_exporter'
-  #node_exporter_port = '9100'
+  node_exporter_port = '9100'
 	#interface_name = node['prometheus_exporters']['listen_interface']
   #interface = node['network']['interfaces'][interface_name]
   #listen_ip = interface['addresses'].find do |_address, data|
