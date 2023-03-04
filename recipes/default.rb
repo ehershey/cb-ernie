@@ -5,7 +5,6 @@
 # Copyright:: 2020, The Authors, All Rights Reserved.
 #
 
-ENV['PATH'] = "#{Homebrew::install_path}/bin:" + ENV['PATH']
 
 install_packages = true
 

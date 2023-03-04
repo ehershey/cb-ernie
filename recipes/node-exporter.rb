@@ -20,13 +20,21 @@ elsif node['os'] == 'darwin'
 
   uid = Etc.getpwnam(username).uid
   Chef::Log.error("uid: #{uid}")
+
+  user_home = Etc.getpwnam(username).dir
+  Chef::Log.error("user_home: #{user_home}")
+
   service_name = "gui/#{uid}/homebrew.mxcl.node_exporter"
   #service_name = "homebrew.mxcl.node_exporter"
   Chef::Log.error("service_name: #{service_name}")
 
-  execute "brew brew services start node_exporter" do
+  ENV['PATH'] = "#{Homebrew::install_path}/bin:" + ENV['PATH']
+  Chef::Log.error "ENV['PATH']: #{ENV['PATH']}"
+
+  execute "brew services start node_exporter" do
     user node['ernie']['user']
-    not_if { ::File.exist? "/Users/ernie/Library/LaunchAgents/homebrew.mxcl.node_exporter.plist" }
+    creates "#{user_home}/Library/LaunchAgents/homebrew.mxcl.node_exporter.plist"
+    environment ({'HOME' => user_home})
   end
 
   file "#{Homebrew::install_path}/etc/node_exporter.args" do
