@@ -3,16 +3,17 @@ if node['os'] == 'linux'
 elsif node['os'] == 'darwin'
   package 'node_exporter'
   node_exporter_port = '9100'
-	#interface_name = node['prometheus_exporters']['listen_interface']
-  #interface = node['network']['interfaces'][interface_name]
-  #listen_ip = interface['addresses'].find do |_address, data|
-    #data['family'] == 'inet'
-  #end.first
+	interface_name = node['prometheus_exporters']['listen_interface']
+  interface = node['network']['interfaces'][interface_name]
+  listen_ip = interface['addresses'].find do |_address, data|
+    data['family'] == 'inet'
+  end.first
 
   username = node['ernie']['user']
   Chef::Log.error("username: #{username}")
 
-  listen_ip=`sudo -u #{username} /Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4`
+  # doesn't seem to work 2023-04-07 - empty
+  # listen_ip=`sudo -u #{username} /Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4`
 
   Chef::Log.error("listen_ip: #{listen_ip}")
 
@@ -44,6 +45,12 @@ elsif node['os'] == 'darwin'
   service service_name do
     action [:enable, :start]
     plist "/Users/#{username}/Library/LaunchAgents/homebrew.mxcl.node_exporter.plist"
+    only_if { listen_ip != '' }
+  end
+  service service_name do
+    action [:disable]
+    plist "/Users/#{username}/Library/LaunchAgents/homebrew.mxcl.node_exporter.plist"
+    only_if { listen_ip == '' }
   end
 else
   Chef::Log.error("No node exporter install method for os: #{node['os']}")
