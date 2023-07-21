@@ -9,7 +9,7 @@ end
 directory node['prometheus_exporters']['node']['textfile_directory'] do
   mode 0775
   recursive true
-  user root
+  user 'root'
   group "node_exporter"
 end
 
