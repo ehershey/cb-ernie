@@ -1,3 +1,19 @@
+username = node['ernie']['user']
+
+group "node_exporter" do
+  action :create
+  append true
+  members [ username ]
+end
+
+directory node['prometheus_exporters']['node']['textfile_directory'] do
+  mode 0775
+  recursive yes
+  user root
+  group "node_exporter"
+end
+
+
 if node['os'] == 'linux'
     include_recipe 'prometheus_exporters::node'
 elsif node['os'] == 'darwin'
@@ -9,7 +25,6 @@ elsif node['os'] == 'darwin'
     data['family'] == 'inet'
   end.first
 
-  username = node['ernie']['user']
   Chef::Log.error("username: #{username}")
 
   # doesn't seem to work 2023-04-07 - empty
@@ -55,6 +70,5 @@ elsif node['os'] == 'darwin'
 else
   Chef::Log.error("No node exporter install method for os: #{node['os']}")
 end
-
 
 
