@@ -23,7 +23,7 @@ elsif node['os'] == 'darwin'
   interface = node['network']['interfaces'][interface_name]
   listen_ip = interface['addresses'].find do |_address, data|
     data['family'] == 'inet'
-  end.first
+  end
 
   Chef::Log.error("username: #{username}")
 
