@@ -1,5 +1,5 @@
 name 'ernie'
-version '0.20'
+version '0.21'
 
 depends 'logrotate'
 depends 'prometheus_exporters'

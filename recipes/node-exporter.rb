@@ -9,11 +9,14 @@ group "node_exporter" do
   members [ username ]
 end
 
-directory node['prometheus_exporters']['node']['textfile_directory'] do
+textfile_directory = node['prometheus_exporters']['node']['textfile_directory']
+directory "override textfile dir perms" do
+  path textfile_directory
   mode 0775
   recursive true
   user 'root'
   group "node_exporter"
+  subscribes :create, "directory[#{textfile_directory}]"
 end
 
 
