@@ -80,7 +80,7 @@ directory "override textfile dir perms" do
   recursive true
   user 'root'
   group "node_exporter"
-  notifies :create, "directory[#{textfile_directory}]", :immediately
+  subscribes :create, 'directory[collector_textfile_directory]'
 end
 
 
