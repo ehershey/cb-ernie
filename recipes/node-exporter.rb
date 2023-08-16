@@ -3,23 +3,6 @@ def get_safe_local_addresses()
 end
 username = node['ernie']['user']
 
-group "node_exporter" do
-  action :create
-  append true
-  members [ username ]
-end
-
-textfile_directory = node['prometheus_exporters']['node']['textfile_directory']
-directory "override textfile dir perms" do
-  path textfile_directory
-  mode 0775
-  recursive true
-  user 'root'
-  group "node_exporter"
-  notifies :create, "directory[#{textfile_directory}]", :immediately
-end
-
-
 if node['os'] == 'linux'
     include_recipe 'prometheus_exporters::node'
 elsif node['os'] == 'darwin'
@@ -82,4 +65,22 @@ elsif node['os'] == 'darwin'
 else
   Chef::Log.error("No node exporter install method for os: #{node['os']}")
 end
+
+
+group "node_exporter" do
+  action :create
+  append true
+  members [ username ]
+end
+
+textfile_directory = node['prometheus_exporters']['node']['textfile_directory']
+directory "override textfile dir perms" do
+  path textfile_directory
+  mode 0775
+  recursive true
+  user 'root'
+  group "node_exporter"
+  notifies :create, "directory[#{textfile_directory}]", :immediately
+end
+
 
