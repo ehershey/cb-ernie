@@ -1,7 +1,23 @@
 def get_safe_local_addresses()
   return ['127.0.0.1']
-  end
-  if node['os'] == 'linux'
+end
+username = node['ernie']['user']
+
+group "node_exporter" do
+  action :create
+  append true
+  members [ username ]
+end
+
+directory node['prometheus_exporters']['node']['textfile_directory'] do
+  mode 0775
+  recursive true
+  user 'root'
+  group "node_exporter"
+end
+
+
+if node['os'] == 'linux'
     include_recipe 'prometheus_exporters::node'
 elsif node['os'] == 'darwin'
   package 'node_exporter'
@@ -13,14 +29,19 @@ elsif node['os'] == 'darwin'
      Chef::Log.error("listen_ip: #{listen_ip}")
     web_listen_addresses = "#{web_listen_addresses} --web-listen-address=#{listen_ip}:#{node_exporter_port}"
   end
+    
+	interface_name = node['prometheus_exporters']['listen_interface']
+  interface = node['network']['interfaces'][interface_name]
+  listen_ip = interface['addresses'].find do |_address, data|
+    data['family'] == 'inet'
+  end
 
-  username = node['ernie']['user']
   Chef::Log.error("username: #{username}")
 
   # doesn't seem to work 2023-04-07 - empty
   # listen_ip=`sudo -u #{username} /Applications/Tailscale.app/Contents/MacOS/Tailscale ip -4`
 
-  # Chef::Log.error("listen_ip: #{listen_ip}")
+  Chef::Log.error("listen_ip: #{listen_ip}")
   #
   #
 
@@ -58,6 +79,4 @@ elsif node['os'] == 'darwin'
 else
   Chef::Log.error("No node exporter install method for os: #{node['os']}")
 end
-
-
 
